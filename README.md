@@ -1,261 +1,89 @@
 # MCP for Cursor
 
-Cursor IDE 用の Model Context Protocol（MCP）ツール集です。このリポジトリは複数の MCP サーバーを簡単にセットアップし、Cursor IDE で AI エージェント機能を強化するためのツールセットを提供します。
-
-[English version below](#mcp-for-cursor-english)
-
-## 概要
-
-このリポジトリには以下の MCP サーバーセットアップが含まれています：
-
-1. **docker-mcp**: Docker 操作を行うための MCP サーバー
-2. **mcp-text-editor**: テキストファイル編集のための MCP サーバー（Python 3.13 以上が必要）
-3. **filesystem**: ファイルシステム操作用 MCP サーバー
-4. **github**: GitHub 操作用 MCP サーバー
-
-## 環境要件
-
-- Python 3.12 以上（docker-mcp 用）
-- Python 3.13 以上（mcp-text-editor 用）
-- Node.js 18 以上（Node.js 20 以上推奨）
-- npm 9 以上
-- Git
-- Docker（docker-mcp 使用時）
-
-## セットアップ手順
-
-### 1. リポジトリのクローン
-
-```bash
-git clone https://github.com/[YOUR_USERNAME]/MCP_for_Cursor.git
-cd MCP_for_Cursor
-```
-
-### 2. 必要なリポジトリのクローン
-
-```bash
-git clone https://github.com/QuantGeekDev/docker-mcp.git mcp-repos/docker-mcp
-git clone https://github.com/tumf/mcp-text-editor.git mcp-repos/mcp-text-editor
-git clone https://github.com/modelcontextprotocol/servers.git mcp-repos/servers
-```
-
-### 3. 依存関係のインストール
-
-#### Python 3.13 のインストール（必要な場合）
-
-Windows 環境では以下のコマンドを実行してインストーラーを起動します：
-
-```powershell
-./install-latest-python.ps1
-```
-
-#### Node.js 20 のインストール（必要な場合）
-
-Windows 環境では以下のコマンドを実行してインストーラーを起動します：
-
-```powershell
-./install-latest-nodejs.ps1
-```
-
-### 4. MCP サーバーのセットアップ
-
-以下のコマンドを実行して、すべての MCP サーバーをセットアップします：
-
-```powershell
-./setup-all-mcp-servers.ps1
-```
-
-または、個別にセットアップする場合：
-
-```powershell
-# Pythonベースのサーバー
-./setup-mcp-servers.ps1
-
-# TypeScriptベースのサーバー
-./setup-typescript-servers.ps1
-```
-
-### 5. Cursor の設定
-
-インストールが完了すると、自動的に`.cursor/mcp.json`が作成されます。Cursor を起動し、このプロジェクトを開くだけで、MCP サーバーが自動的に認識されます。
-
-## 使用方法
-
-1. Cursor を起動します
-2. このリポジトリをプロジェクトとして開きます
-3. Cursor はプロジェクトルートの`.cursor/mcp.json`を検出し、MCP サーバーを自動的に使用可能にします
-4. AI エージェントを使用する際に、追加の MCP 機能が利用できるようになります
-
-## トラブルシューティング
-
-### MCP サーバーが動作しない場合
-
-1. 各サーバーを手動で起動してエラーメッセージを確認：
-
-```powershell
-# Docker MCP
-cd mcp-repos/docker-mcp
-python -m docker_mcp
-
-# Text Editor MCP
-cd mcp-repos/mcp-text-editor
-python -m mcp_text_editor
-
-# Filesystem MCP
-cd mcp-repos/servers/src/filesystem
-npx ts-node index.ts
-
-# GitHub MCP
-cd mcp-repos/servers/src/github
-npx ts-node index.ts
-```
-
-2. Python および node.js のバージョンを確認：
-
-```powershell
-python --version
-node --version
-npm --version
-```
-
-## 関連プロジェクト
-
-- [docker-mcp](https://github.com/QuantGeekDev/docker-mcp)
-- [mcp-text-editor](https://github.com/tumf/mcp-text-editor)
-- [MCP Servers](https://github.com/modelcontextprotocol/servers)
-
-## ライセンス
-
-各 MCP サーバーは、それぞれのリポジトリで定義されているライセンスに従います。
+このリポジトリは、Cursor 用の MCP サーバーを導入および管理するためのツールとスクリプトをまとめたものです。
 
 ---
 
-<a id="mcp-for-cursor-english"></a>
+## 構成内容
 
-# MCP for Cursor (English)
+- **セットアップスクリプト (Windows 環境)**
+  - **setup-mcp-servers.ps1**  
+    Windows 環境向けの PowerShell スクリプトです。MCP サーバーの各種セットアップを自動で実施します。
+  - **setup-all-mcp-servers.ps1**  
+    すべての MCP サーバーを一括でセットアップするための PowerShell スクリプトです。
+  - **setup-typescript-servers.ps1**  
+    TypeScript を利用するサーバーのセットアップ用スクリプトです（対象サーバーがある場合）。
 
-A collection of Model Context Protocol (MCP) tools for Cursor IDE. This repository provides a toolkit to easily set up multiple MCP servers and enhance AI agent functionality in Cursor IDE.
+- **MCP サーバーのソースコード**
+  - `mcp-repos/` 以下に、各 MCP サーバー（例: docker-mcp、mcp-text-editor）のソースコードが配置されています。
 
-## Overview
+---
 
-This repository includes setup for the following MCP servers:
+## Windows 環境でのセットアップ手順
 
-1. **docker-mcp**: MCP server for Docker operations
-2. **mcp-text-editor**: MCP server for text file editing (requires Python 3.13+)
-3. **filesystem**: MCP server for filesystem operations
-4. **github**: MCP server for GitHub operations
+1. **セットアップスクリプトの実行**  
+   Windows ユーザーは PowerShell で `setup-mcp-servers.ps1` または `setup-all-mcp-servers.ps1` を実行してください。  
+   これらのスクリプトは、必要な依存関係のインストール、各 MCP サーバーのビルド、設定を自動的に行います。
 
-## Requirements
+2. **詳細およびトラブルシューティング**  
+   - スクリプトの実行結果やエラーは、各スクリプト内のログファイルや画面出力で確認できます。
+   - Windows 環境でのインストール方法に関しては、個別のスクリプトファイル内にコメントで詳しく記載しています。
 
-- Python 3.12+ (for docker-mcp)
-- Python 3.13+ (for mcp-text-editor)
-- Node.js 18+ (Node.js 20+ recommended)
-- npm 9+
-- Git
-- Docker (when using docker-mcp)
+---
 
-## Setup Instructions
+## WSL (Windows Subsystem for Linux) 環境でのセットアップ（追記）
 
-### 1. Clone this repository
+本来の内容は Windows 環境向けですが、WSL 環境向けの設定も下記の通り追記しました。WSL ユーザーは以下の手順に従ってください。
 
-```bash
-git clone https://github.com/[YOUR_USERNAME]/MCP_for_Cursor.git
-cd MCP_for_Cursor
-```
+### セットアップスクリプト (WSL)
 
-### 2. Clone required repositories
+- **setup-mcp-servers-wsl.sh**  
+  WSL 環境向けの Bash スクリプトです。このスクリプトは以下の処理を行います:
+  - **WSL 環境の検出**  
+    スクリプト開始時に、現在の環境が WSL であるかを確認します。
+  - **apt リポジトリの更新と依存関係のインストール**  
+    apt を使用してリポジトリの更新を行い、Node.js および Python3 のインストール状況を確認します。足りない場合は自動的にインストールを試みます。
+  - **MCP サーバーのセットアップ**  
+    指定された MCP サーバー（例: docker-mcp、mcp-text-editor）のディレクトリ内で、各種ビルドおよびセットアップ処理（npm install や pip install 等）を実行します。
+  - **Python バージョンのアップグレード (オプション)**  
+    mcp-text-editor など、一部のサーバーでは Python 3.13 以上が必要です。  
+    オプション `--upgrade-python` を指定して実行すると、pyenv を使用してユーザーレベルで Python のアップグレード（例：3.13.0 のインストール）が試みられます。
 
-```bash
-git clone https://github.com/QuantGeekDev/docker-mcp.git mcp-repos/docker-mcp
-git clone https://github.com/tumf/mcp-text-editor.git mcp-repos/mcp-text-editor
-git clone https://github.com/modelcontextprotocol/servers.git mcp-repos/servers
-```
+### 実行方法
 
-### 3. Install dependencies
+1. **基本的なセットアップ**  
+   WSL 環境で次のコマンドを実行してください:
+   ```
+   bash setup-mcp-servers-wsl.sh
+   ```
+   この実行により、WSL 環境での MCP サーバーのセットアップが順次実行され、出力は `output.log` に記録されます。
 
-#### Install Python 3.13 (if needed)
+2. **Python のアップグレード (必要に応じて)**  
+   mcp-text-editor のセットアップで Python バージョンが不足している場合、以下のコマンドで Python のアップグレードが可能です:
+   ```
+   bash setup-mcp-servers-wsl.sh --upgrade-python
+   ```
+   このオプションは、pyenv を自動でインストール・設定し、指定されたバージョン（例: 3.13.0）の Python をインストールしてから、グローバル環境に設定します。  
+   ※ pyenv 使用時には、シェルの初期化ファイルへの設定追加が必要な場合があります。詳細はスクリプト内のコメントを参照してください。
 
-On Windows, run the following command to start the installer:
+---
 
-```powershell
-./install-latest-python.ps1
-```
+## ログとトラブルシューティング
 
-#### Install Node.js 20 (if needed)
+- **ログ:**  
+  WSL 用セットアップスクリプトの出力は、直下の `output.log` に全て記録されます。  
+  エラーや警告が表示された場合は、このログファイルを確認して対処してください。
 
-On Windows, run the following command to start the installer:
+- **よくある問題:**  
+  - **Python 拡張モジュールの不足:**  
+    pyenv で Python をビルドする際、`bz2`、`ctypes`、`tkinter`、`lzma` などのモジュールが欠落する場合、必要なライブラリ（例: libbz2、libffi、Tk、xz-utils など）が不足している可能性があります。
+  - **PATH 関連の警告:**  
+    ローカルインストールされたプログラム（例: docker-mcp 等）の実行ファイルパス（~/.local/bin）が PATH に含まれていない場合、警告が表示されることがあります。必要に応じて PATH を修正してください。
 
-```powershell
-./install-latest-nodejs.ps1
-```
+---
 
-### 4. Set up MCP servers
+## まとめ
 
-Run the following command to set up all MCP servers:
+このリポジトリは、Windows および WSL 環境の双方で MCP サーバーをセットアップするためのツールとスクリプトを提供しています。既存の Windows 向けの内容はそのまま維持し、WSL 環境向けの追加情報を追記しています。各環境に合わせた適切なスクリプトを実行し、詳細なログを参照することで、スムーズなセットアップが可能となります。
 
-```powershell
-./setup-all-mcp-servers.ps1
-```
-
-Or, to set up servers individually:
-
-```powershell
-# Python-based servers
-./setup-mcp-servers.ps1
-
-# TypeScript-based servers
-./setup-typescript-servers.ps1
-```
-
-### 5. Configure Cursor
-
-After installation, `.cursor/mcp.json` will be created automatically. Just start Cursor and open this project to automatically recognize the MCP servers.
-
-## Usage
-
-1. Start Cursor
-2. Open this repository as a project
-3. Cursor will detect `.cursor/mcp.json` in the project root and make MCP servers available automatically
-4. Additional MCP features will be available when using AI agents
-
-## Troubleshooting
-
-### If MCP servers are not working
-
-1. Start each server manually to check for error messages:
-
-```powershell
-# Docker MCP
-cd mcp-repos/docker-mcp
-python -m docker_mcp
-
-# Text Editor MCP
-cd mcp-repos/mcp-text-editor
-python -m mcp_text_editor
-
-# Filesystem MCP
-cd mcp-repos/servers/src/filesystem
-npx ts-node index.ts
-
-# GitHub MCP
-cd mcp-repos/servers/src/github
-npx ts-node index.ts
-```
-
-2. Check Python and Node.js versions:
-
-```powershell
-python --version
-node --version
-npm --version
-```
-
-## Related Projects
-
-- [docker-mcp](https://github.com/QuantGeekDev/docker-mcp)
-- [mcp-text-editor](https://github.com/tumf/mcp-text-editor)
-- [MCP Servers](https://github.com/modelcontextprotocol/servers)
-
-## License
-
-Each MCP server follows the license defined in its respective repository.
+Happy Coding!
